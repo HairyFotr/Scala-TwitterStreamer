@@ -1,7 +1,7 @@
 package com.streamer.twitter
 
 import org.apache.commons.httpclient.HttpClient
-import org.apache.commons.httpclient.HttpURL
+import org.apache.commons.httpclient.HttpsURL
 import org.apache.commons.httpclient.UsernamePasswordCredentials
 import org.apache.commons.httpclient.auth.AuthScope
 import org.apache.commons.httpclient.HttpMethod

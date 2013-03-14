@@ -1,7 +1,7 @@
 package com.streamer.twitter
 
 import org.apache.commons.httpclient.HttpClient
-import org.apache.commons.httpclient.HttpURL
+import org.apache.commons.httpclient.HttpsURL
 import org.apache.commons.httpclient.UsernamePasswordCredentials
 import org.apache.commons.httpclient.auth.AuthScope
 import org.apache.commons.httpclient.HttpMethod
@@ -52,7 +52,7 @@ trait BasicClient extends Client {
    * Returns the AuthScope for the current resource url.
    */
   def getAuthScope(method: HttpMethod): AuthScope = {
-    val url = new HttpURL(method.getURI.toString)
+    val url = new HttpsURL(method.getURI.toString)
     new AuthScope(url.getHost, url.getPort)
   }
 }
