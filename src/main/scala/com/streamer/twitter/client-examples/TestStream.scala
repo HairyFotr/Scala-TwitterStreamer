@@ -9,6 +9,6 @@ object TestStream {
     val password = Config.readString("password")
 
     val twitterClient = new BasicStreamingClient(username, password, processor)
-    twitterClient.sample
+    twitterClient.filter(locations = "-180,-90,180,90")
   }
 }

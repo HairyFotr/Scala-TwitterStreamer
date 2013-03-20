@@ -52,7 +52,7 @@ trait StreamingMethods {
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the status text that is exactly length bytes.
    * @param follow Specifies the list of Twitter user id's to follow
    */
-  def filter(follow: Set[Long] = Set[Long](), count: Int = 0, delimited: String = "") = {
+  def filter(follow: Set[Long] = Set[Long](), count: Int = 0, delimited: String = "", locations: String = "") = {
     val baseUrl = Config.readString("twitterFilterUrl")
 
     // Add the params
@@ -60,6 +60,10 @@ trait StreamingMethods {
 
     if(!follow.isEmpty) {
       params += new NameValuePair("follow", follow.mkString(","))
+    }
+
+    if(locations != "") {
+      params += new NameValuePair("locations", locations)
     }
 
     val postMethod = buildPost(baseUrl, params)

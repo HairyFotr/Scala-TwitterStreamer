@@ -34,7 +34,7 @@ libraryDependencies += "net.lag" % "configgy" % "2.0.0" exclude("org.scala-tools
 
 //libraryDependencies += "org.json4s" % "json4s-native_2.9.2" % "3.1.0"
 
-//libraryDependencies += "org.json4s" % "json4s-jackson_2.9.2" % "3.1.0"
+libraryDependencies += "org.json4s" % "json4s-jackson_2.9.2" % "3.1.0"
  
 
 // This is to prevent error [java.lang.OutOfMemoryError: PermGen space]
