@@ -1,22 +1,24 @@
 package com.streamer.twitter.config
 
-import net.lag.configgy._
+//Configgy is deprecated
+//import net.lag.configgy._
+import org.streum.configrity._
 import org.apache.commons.codec.binary.Base64
 
 object Config {
 
-  Configgy.configure("config/TwitterStreamer.conf")
-  val config = Configgy.config
+  //Configgy.configure("config/TwitterStreamer.conf")
+  val config = Configuration.load("config/TwitterStreamer.conf")
 
   /*
    * Register config with JMX
    */
-  config.registerWithJmx("com.streamer.twitter")
+  //config.registerWithJmx("com.streamer.twitter")
 
-  def getString(key: String) = config.getString(key)
+  def getString(key: String) = config[String](key, "")
 
-  def readString(key: String): String = config.getString(key) match {
-    case Some(value) => value.toString
+  def readString(key: String): String = config[String](key) match {
+    case value:String => value
     case _ => throw new ConfigurationException(key)
   }
 

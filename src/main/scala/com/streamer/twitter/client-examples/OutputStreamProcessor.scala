@@ -21,7 +21,6 @@ class OutputStreamProcessor extends StreamProcessor {
       //println(line)
 
       var parsed_json = parse(line)
-
       //println((parsed_json \ "geo" \ "coordinates"))
 
       (parsed_json \ "geo" \ "coordinates") match {
