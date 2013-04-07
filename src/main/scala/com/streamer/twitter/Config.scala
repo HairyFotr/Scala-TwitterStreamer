@@ -8,7 +8,7 @@ import org.apache.commons.codec.binary.Base64
 object Config {
 
   //Configgy.configure("config/TwitterStreamer.conf")
-  val config = Configuration.load("config/TwitterStreamer.conf")
+  val config = Configuration.loadResource("/config/TwitterStreamer.conf")
 
   /*
    * Register config with JMX
