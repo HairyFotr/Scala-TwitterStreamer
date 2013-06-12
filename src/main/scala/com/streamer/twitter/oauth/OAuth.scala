@@ -8,6 +8,8 @@ import java.net.URI
 
 import org.apache.commons.codec.binary.Base64.encodeBase64
 import org.apache.commons.httpclient.HttpMethod
+import org.apache.commons.httpclient.methods.PostMethod
+
 
 case class Consumer(key: String, secret: String)
 case class Token(value: String, secret: String)
@@ -39,7 +41,15 @@ object OAuth {
   def sign(httpMethod: HttpMethod, consumer: Consumer, token: Token): HttpMethod = {
     val method = httpMethod.getName
     val url = httpMethod.getURI.toString.split('?')(0)
-    val userParams = splitDecode(httpMethod.getURI.getQuery)
+    var userParams = splitDecode(httpMethod.getURI.getQuery)
+
+    httpMethod.getName() match {
+        case "POST" =>
+            userParams = userParams ++ httpMethod.asInstanceOf[PostMethod].getParameters().map{ param =>
+                param.getName() -> encode(param.getValue())
+            }
+    }             
+
     val headers = signatureHeaders(method, url, userParams, consumer, token)
     val encodedHeaders = headers.map { 
       case (k, v) => (encode(k)) + "=\"%s\"".format(encode(v))
