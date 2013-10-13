@@ -24,24 +24,13 @@ trait StreamingMethods {
    * @param count Indicates the number of previous statuses to consider for delivery before transitioning to live stream delivery.
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the status text that is exactly length bytes. ex. length
    */
-  def sample(count: Int, delimited: String): Unit = {
-    val baseUrl = Config.readString("twitterStreamUrl")
+  def sample(count: Int = 0, delimited: String = ""): Unit = {
+    val params = ArrayBuffer[NameValuePair]()
+    if(count > 0) params += new NameValuePair("count", count.toString)
+    if(delimited != "") params += new NameValuePair("delimited", delimited)
 
-    // Add the params
-    val params = new ArrayBuffer[String]
-    if(count > 0) {
-      params += "count="+ count
-    }
-    if(delimited != "") {
-      params += "delimited="+ delimited
-    }
-
-    val getMethod = buildGet(baseUrl, params)
-    stream(getMethod)
+    stream(buildPost(Config.readString("twitterStreamUrl"), params))
   }
-
-  def sample(count: Int): Unit = sample(0, "")
-  def sample(): Unit = sample(0, "")
 
   /**
    * Filter 
@@ -53,21 +42,11 @@ trait StreamingMethods {
    * @param follow Specifies the list of Twitter user id's to follow
    */
   def filter(follow: Set[Long] = Set[Long](), count: Int = 0, delimited: String = "", locations: String = ""): Unit = {
-    val baseUrl = Config.readString("twitterFilterUrl")
+    val params = ArrayBuffer[NameValuePair]()
+    if(!follow.isEmpty) params += new NameValuePair("follow", follow.mkString(","))
+    if(locations != "") params += new NameValuePair("locations", locations)
 
-    // Add the params
-    val params = new ArrayBuffer[NameValuePair]
-
-    if(!follow.isEmpty) {
-      params += new NameValuePair("follow", follow.mkString(","))
-    }
-
-    if(locations != "") {
-      params += new NameValuePair("locations", locations)
-    }
-
-    val postMethod = buildPost(baseUrl, params)
-    stream(postMethod)
+    stream(buildPost(Config.readString("twitterFilterUrl"), params))
   }
 
   /**
@@ -80,17 +59,10 @@ trait StreamingMethods {
    * @param track Specifies the list of keywords to keep track of
    */
   def track(track: Set[String] = Set[String](), count: Int = 0, delimited: String = ""): Unit = {
-    val baseUrl = Config.readString("twitterFilterUrl")
+    val params = ArrayBuffer[NameValuePair]()
+    if(!track.isEmpty) params += new NameValuePair("track", track.mkString(","))
 
-    // Add the params
-    val params = new ArrayBuffer[NameValuePair]
-
-    if(!track.isEmpty) {
-      params += new NameValuePair("track", track.mkString(","))
-    }
-
-    val postMethod = buildPost(baseUrl, params)
-    stream(postMethod)
+    stream(buildPost(Config.readString("twitterFilterUrl"), params))
   }
 
   /**
@@ -102,45 +74,27 @@ trait StreamingMethods {
    * @param count Indicates the number of previous statuses to consider for delivery before transitioning to live stream delivery.
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the
    */
-   def firehose(count: Int, delimited: String): Unit = {
-     val baseUrl = Config.readString("twitterFirehoseUrl")
+  def firehose(count: Int = 0, delimited: String = ""): Unit = {
+    val params = ArrayBuffer[NameValuePair]()
+    if(count > 0) params += new NameValuePair("count", count.toString)
+    if(delimited != "") params += new NameValuePair("delimited", delimited)
 
-     // Add the params
-     val params = new ArrayBuffer[String]
-     if(count > 0) {
-       params += "count="+ count
-     }
-     if(delimited != "") {
-       params += "delimited="+ delimited
-     }
-
-     val getMethod = buildGet(baseUrl, params)
-     stream(getMethod)
-   }
-
-  def firehose(count: Int): Unit = firehose(count, "")
-  def firehose(): Unit = firehose(0, "")
+    stream(buildPost(Config.readString("twitterFirehoseUrl"), params))
+  }
 
   /**
    * Site Streams
    *
    * @param ids to follow
    */
-   def siteStream(follow: Set[Long], withParam: String = "followings"): Unit = {
-     val baseUrl = Config.readString("twitterSiteStreamUrl")
+  def siteStream(follow: Set[Long], withParam: String = "followings"): Unit = {
+    val params = ArrayBuffer[NameValuePair]()
+    params += new NameValuePair("with", withParam)
 
-     // Add the params
-     val params = new ArrayBuffer[String]
-
-     if(!follow.isEmpty) {
-       params += "follow="+ follow.mkString(",")
-     }
-
-     params += ("with=" + withParam)
-
-     val getMethod = buildGet(baseUrl, params)
-     stream(getMethod)
-   }
+    if(!follow.isEmpty) params += new NameValuePair("follow", follow.mkString(","))
+    
+    stream(buildPost(Config.readString("twitterSiteStreamUrl"), params))
+  }
 
   /**
    * Links
@@ -150,20 +104,12 @@ trait StreamingMethods {
    *
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the
    */
-  def links(delimited: String): Unit = {
-    val baseUrl = Config.readString("twitterLinksUrl")
-
-     // Add the params
-     val params = new ArrayBuffer[String]
-     if(delimited != "") {
-       params += "delimited="+ delimited
-     }
-
-     val getMethod = buildGet(baseUrl, params)
-     stream(getMethod)
+  def links(delimited: String = ""): Unit = {
+    val params = ArrayBuffer[NameValuePair]()
+    if(delimited != "") params += new NameValuePair("delimited", delimited)
+    
+    stream(buildPost(Config.readString("twitterLinksUrl"), params))
   }
-
-  def links(): Unit = links("")
 
   /**
    * Retweet
@@ -173,28 +119,14 @@ trait StreamingMethods {
    *
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the
    */
-   def retweet(delimited: String): Unit = {
-     val baseUrl = Config.readString("twitterRetweetUrl")
-
-      // Add the params
-      val params = new ArrayBuffer[String]
-      if(delimited != "") {
-        params += "delimited="+ delimited
-      }
-
-      val getMethod = buildGet(baseUrl, params)
-      stream(getMethod)
-   }
-
-  def retweet(): Unit = retweet("")
+  def retweet(delimited: String = ""): Unit = {
+    val params = ArrayBuffer[NameValuePair]()
+    if(delimited != "") params += new NameValuePair("delimited", delimited)
+    
+    stream(buildPost(Config.readString("twitterRetweetUrl"), params))
+  }
 
   def stream(method: HttpMethod): Unit
-
-  def buildGet(baseUrl: String, params: ArrayBuffer[String]): GetMethod = {
-    val getMethod: GetMethod = new GetMethod(baseUrl)
-    getMethod.setQueryString(URIUtil.encodeQuery(params.mkString("&")))
-    getMethod
-  }
 
   def buildPost(baseUrl: String, params: ArrayBuffer[NameValuePair]): PostMethod = {
     val postMethod = new PostMethod(baseUrl)

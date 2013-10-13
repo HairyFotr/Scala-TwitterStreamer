@@ -1,6 +1,11 @@
 #
 # Config file for the Streaming Service
 #
+# You can either add your Twitter username and password or the Oauth information
+# If you want to use OAuth authentication enter your Consumer pair Key, and Access token secret.
+# You can obtain your Access Token by going to http://dev.twitter.com/apps
+
+# Username based login
 username = ""
 password = ""
 
@@ -10,7 +15,7 @@ consumer.secret = "Your Consumer Secret"
 access.token    = "Your Access Token"
 access.secret   = "Your Access Token Secret"
 
-userAgent = "StreamingClient/1.0 (compatible; Mozilla/5.0; Jakarta Commons-HttpClient/3.1 +http://github.com/acrosa/Scala-TwitterStreamer)"
+userAgent = "StreamingClient/1.0 (compatible; Mozilla/5.0; Jakarta Commons-HttpClient/3.1 +http://github.com/HairyFotr/Scala-TwitterStreamer)"
 
 twitterStreamUrl   = "https://stream.twitter.com/1.1/statuses/sample.json"
 twitterFilterUrl   = "https://stream.twitter.com/1.1/statuses/filter.json"
@@ -20,5 +25,6 @@ twitterRetweetUrl  = "https://stream.twitter.com/1.1/statuses/retweet.json"
 twitterSiteStreamUrl = "https://betastream.twitter.com/2b/site.json"
 
 useJmx = true
-# the time it takes to timeout when no data is streamed from Twitter
+
+# The time it takes to timeout when no data is streamed from Twitter
 socketTimeout = 60000
