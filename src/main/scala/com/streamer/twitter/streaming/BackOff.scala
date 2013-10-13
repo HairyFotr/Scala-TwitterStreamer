@@ -5,7 +5,7 @@ package com.streamer.twitter
  *
  * This class implements the waiting strategy when errors arise, and trust me, they will.
  */
-case class BackOff(var origBackOffTime: Long, capBackOffAt: Long) {
+case class BackOff(val origBackOffTime: Long, capBackOffAt: Long) {
   var backOffTime = origBackOffTime
 
   def backOff(): Unit = {

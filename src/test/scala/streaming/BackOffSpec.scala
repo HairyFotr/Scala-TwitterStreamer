@@ -27,7 +27,7 @@ object BackOffSpec extends Specification {
       backOff.backOff
       backOff.backOffTime mustEqual 500
       backOff.reset()
-      backOff.backOffTime mustEqual 0
+      backOff.backOffTime mustEqual 250
     }
   }
 }

@@ -19,13 +19,6 @@ object StreamingMethodsSpec extends Specification {
       client = new StreamingClientSpecHelper("user", "password", o)
     }
 
-    "build a Get request with specified params" in {
-      val params = new ArrayBuffer[String]
-        params += "count=10"
-      val request = client.buildGet("www.github.com", params)
-      request.getURI mustEqual new URI("www.github.com?count=10", false)
-    }
-
     "build a post request with specified params" in {
       val params = new ArrayBuffer[NameValuePair]
         params += new NameValuePair("follow", "cool,works,awesome")
