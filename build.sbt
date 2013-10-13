@@ -18,7 +18,28 @@ javaOptions ++= Seq(
   "-Xmx2g")
 
 scalacOptions ++= Seq(
-  "-Yresolve-term-conflict:package")
+  //"-feature",
+  //"-deprecation",
+  "-unchecked",
+  "-Xlint",
+  "-Ywarn-adapted-args",
+  //"-Ywarn-all",
+  "-Ywarn-dead-code",
+  "-Ywarn-inaccessible",
+  //"-Ywarn-infer-any",
+  "-Ywarn-nullary-override",
+  "-Ywarn-nullary-unit",
+  //"-Ywarn-numeric-widen",
+  "-Ywarn-value-discard")
+
+// Add static analysis
+
+resolvers += "linter" at "http://hairyfotr.github.io/linteRepo/releases"
+
+addCompilerPlugin("com.foursquare.lint" %% "linter" % "0.1-SNAPSHOT")
+
+org.scalastyle.sbt.ScalastylePlugin.Settings
 
 // When doing sbt run, fork a separate process.  This is apparently needed by storm.
 fork := true
+

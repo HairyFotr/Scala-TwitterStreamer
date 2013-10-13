@@ -24,7 +24,7 @@ trait StreamingMethods {
    * @param count Indicates the number of previous statuses to consider for delivery before transitioning to live stream delivery.
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the status text that is exactly length bytes. ex. length
    */
-  def sample(count: Int, delimited: String) = {
+  def sample(count: Int, delimited: String): Unit = {
     val baseUrl = Config.readString("twitterStreamUrl")
 
     // Add the params
@@ -41,7 +41,7 @@ trait StreamingMethods {
   }
 
   def sample(count: Int): Unit = sample(0, "")
-  def sample: Unit = sample(0, "")
+  def sample(): Unit = sample(0, "")
 
   /**
    * Filter 
@@ -52,7 +52,7 @@ trait StreamingMethods {
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the status text that is exactly length bytes.
    * @param follow Specifies the list of Twitter user id's to follow
    */
-  def filter(follow: Set[Long] = Set[Long](), count: Int = 0, delimited: String = "", locations: String = "") = {
+  def filter(follow: Set[Long] = Set[Long](), count: Int = 0, delimited: String = "", locations: String = ""): Unit = {
     val baseUrl = Config.readString("twitterFilterUrl")
 
     // Add the params
@@ -79,7 +79,7 @@ trait StreamingMethods {
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the status text that is exactly length bytes.
    * @param track Specifies the list of keywords to keep track of
    */
-  def track(track: Set[String] = Set[String](), count: Int = 0, delimited: String = "") = {
+  def track(track: Set[String] = Set[String](), count: Int = 0, delimited: String = ""): Unit = {
     val baseUrl = Config.readString("twitterFilterUrl")
 
     // Add the params
@@ -102,7 +102,7 @@ trait StreamingMethods {
    * @param count Indicates the number of previous statuses to consider for delivery before transitioning to live stream delivery.
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the
    */
-   def firehose(count: Int, delimited: String) = {
+   def firehose(count: Int, delimited: String): Unit = {
      val baseUrl = Config.readString("twitterFirehoseUrl")
 
      // Add the params
@@ -119,14 +119,14 @@ trait StreamingMethods {
    }
 
   def firehose(count: Int): Unit = firehose(count, "")
-  def firehose: Unit = firehose(0, "")
+  def firehose(): Unit = firehose(0, "")
 
   /**
    * Site Streams
    *
    * @param ids to follow
    */
-   def siteStream(follow: Set[Long], withParam: String = "followings") = {
+   def siteStream(follow: Set[Long], withParam: String = "followings"): Unit = {
      val baseUrl = Config.readString("twitterSiteStreamUrl")
 
      // Add the params
@@ -150,7 +150,7 @@ trait StreamingMethods {
    *
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the
    */
-  def links(delimited: String) = {
+  def links(delimited: String): Unit = {
     val baseUrl = Config.readString("twitterLinksUrl")
 
      // Add the params
@@ -173,7 +173,7 @@ trait StreamingMethods {
    *
    * @param delimited Indicates that statuses should be delimited. Statuses are represented by a length, in bytes, a newline, and the
    */
-   def retweet(delimited: String) = {
+   def retweet(delimited: String): Unit = {
      val baseUrl = Config.readString("twitterRetweetUrl")
 
       // Add the params

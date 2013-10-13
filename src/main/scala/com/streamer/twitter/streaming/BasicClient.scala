@@ -46,7 +46,7 @@ trait BasicClient extends Client {
   /*
    * Returns the credentials for the user.
    */
-  def getCredentials = new UsernamePasswordCredentials(username +":"+ password)
+  def getCredentials: UsernamePasswordCredentials = new UsernamePasswordCredentials(username +":"+ password)
 
   /*
    * Returns the AuthScope for the current resource url.

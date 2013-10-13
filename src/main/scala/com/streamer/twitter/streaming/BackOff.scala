@@ -8,7 +8,7 @@ package com.streamer.twitter
 case class BackOff(var origBackOffTime: Long, capBackOffAt: Long) {
   var backOffTime = origBackOffTime
 
-  def backOff = {
+  def backOff(): Unit = {
     Thread.sleep(backOffTime)
     // Let's wait some more
     backOffTime *= 2
@@ -21,5 +21,5 @@ case class BackOff(var origBackOffTime: Long, capBackOffAt: Long) {
   /**
    * After all errors are resolved (ie successful connection), we reset the sleeping counter.
    */
-  def reset() = { backOffTime = origBackOffTime }
+  def reset(): Unit = { backOffTime = origBackOffTime }
 }
